@@ -36,12 +36,4 @@ def editar_imagem(request):
     pass
 
 def deletar_imagem(request):
-    if not request.user.is_authenticated:
-        messages.error(request, 'Usuário não logado')
-        return redirect('login')
-    if 'deletar' in request.GET:
-        fotografias = Fotografia.objects.delete
-        return redirect('index')
-
-
-    return redirect('index')
+    pass 
