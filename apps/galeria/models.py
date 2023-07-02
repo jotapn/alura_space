@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 class Fotografia(models.Model):
     OPCAO_CATEGORIA=[
         ('NEBULOSA', 'Nebulosa'),
-        ('GALÁXIA', 'Galáxia'),
+        ('GALAXIA', 'Galáxia'),
         ('ESTRELA', 'Estrela'),
         ('PLANETA', 'Planeta')
     ]
