@@ -9,7 +9,7 @@ def index(request):
     if not request.user.is_authenticated:
         messages.error(request, 'Usuário não logado')
         return redirect('login')
-    fotografias = Fotografia.objects.order_by('data_publicada').filter(publicada=True)
+    fotografias = Fotografia.objects.order_by('data_fotografia').filter(publicada=True)
     return render(request, 'galeria/index.html', {'cards': fotografias})
 
 def imagem(request, foto_id):
@@ -20,7 +20,7 @@ def buscar(request):
     if not request.user.is_authenticated:
         messages.error(request, 'Usuário não logado')
         return redirect('login')
-    fotografias = Fotografia.objects.order_by('data_publicada').filter(publicada=True)
+    fotografias = Fotografia.objects.order_by('data_fotografia').filter(publicada=True)
     if 'buscar' in request.GET:
         nome_a_buscar = request.GET['buscar']
         if nome_a_buscar:
@@ -29,8 +29,19 @@ def buscar(request):
     return render(request, 'galeria/buscar.html',{'cards': fotografias})
 
 def nova_imagem(request):
+    if not request.user.is_authenticated:
+        messages.error(request, 'Usuário não logado')
+        return redirect('login')
+    
     form = FotografiaForms
-    return render(request, 'galeria/nova-imagem.html', {'form', form})
+    if request.method == 'POST':
+        form = FotografiaForms(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Nova fotografia cadastrada')
+            return redirect('index')
+
+    return render(request, 'galeria/nova-imagem.html', {'form': form})
 
 def editar_imagem(request):
     pass
