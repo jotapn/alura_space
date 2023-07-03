@@ -10,7 +10,8 @@ def index(request):
         messages.error(request, 'Usuário não logado')
         return redirect('login')
     fotografias = Fotografia.objects.order_by('data_fotografia').filter(publicada=True)
-    return render(request, 'galeria/index.html', {'cards': fotografias})
+    tags = Fotografia.OPCAO_CATEGORIA
+    return render(request, 'galeria/index.html', {'cards': fotografias,'tags':tags})
 
 def imagem(request, foto_id):
     fotografia = get_object_or_404(Fotografia, pk=foto_id)
